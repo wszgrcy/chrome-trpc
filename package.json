@@ -1,7 +1,9 @@
 {
   "name": "cyia-template",
   "version": "1.0.1",
-  "repository": {},
+  "repository": {
+    "url": "https://github.com/wszgrcy/chrome-trpc"
+  },
   "scripts": {
     "test": "pnpm --filter \"./packages/trpc\" test",
     "build": "rimraf ./dist && tsx ./script/build.esbuild.ts && tsc -P ./tsconfig.type.json ",
