@@ -41,7 +41,8 @@
   },
   "dependencies": {
     "snappyjs": "^0.7.0",
-    "bowser": "2.14.1"
+    "bowser": "2.14.1",
+    "superjson": "2.2.6"
   },
   "devDependencies": {
     "@types/snappyjs": "^0.7.1",
