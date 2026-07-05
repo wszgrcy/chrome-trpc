@@ -49,6 +49,8 @@ export const appRouter = t.router({
 export type AppRouter = typeof appRouter;
 ```
 
+- 如果在Content Script中使用，需要设置isServer `const t = initTRPC.create({ isServer: true });`
+
 ### 2. 服务端（接收端）
 
 在需要提供服务的脚本（如 background 或 content script）中，使用 `createChromeHandler` 监听来自其他部分的连接。
@@ -112,15 +114,16 @@ createChromeHandler({ router: appRouter });
 import { chromeLink } from '@cyia/chrome-trpc/client';
 import { createTRPCProxyClient } from '@trpc/client';
 import type { AppRouter } from './router';
-
+// popup 到 Content Script 时
 const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-if (tab.id) {
-  const port = chrome.tabs.connect(tab.id);
-  const trpc = createTRPCProxyClient<AppRouter>({
-    links: [chromeLink({ port })],
-  });
-  const data = await trpc.getData.query();
-}
+const port = chrome.tabs.connect(tab.id);
+// popup/Content Script 到 Background 时
+const port = chrome.runtime.connect();
+
+const trpc = createTRPCProxyClient<AppRouter>({
+  links: [chromeLink({ port })],
+});
+const data = await trpc.getData.query();
 ```
 
 ## 📦 二进制压缩

@@ -49,6 +49,8 @@ export const appRouter = t.router({
 export type AppRouter = typeof appRouter;
 ```
 
+- If used in a Content Script, you need to set `isServer`: `const t = initTRPC.create({ isServer: true });`
+
 ### 2. Server (receiving end)
 
 In the script that provides the service (e.g., background or content script), use `createChromeHandler` to listen for connections from other parts.
@@ -90,10 +92,10 @@ console.log(greeting); // "Hello World"
 
 ## 🔌 Three Communication Modes Explained
 
-| Direction                      | Client (caller) | Server (receiver) | How to obtain the `port`                                                    |
-| ------------------------------ | --------------- | ----------------- | --------------------------------------------------------------------------- |
-| **Popup → Background**          | Popup           | Background        | `chrome.runtime.connect()`                                                  |
-| **Content Script → Background** | Content Script  | Background        | `chrome.runtime.connect()`                                                  |
+| Direction                       | Client (caller) | Server (receiver) | How to obtain the `port`                                                          |
+| ------------------------------- | --------------- | ----------------- | --------------------------------------------------------------------------------- |
+| **Popup → Background**          | Popup           | Background        | `chrome.runtime.connect()`                                                        |
+| **Content Script → Background** | Content Script  | Background        | `chrome.runtime.connect()`                                                        |
 | **Popup → Content Script**      | Popup           | Content Script    | First get the tabId via `chrome.tabs.query`,<br>then `chrome.tabs.connect(tabId)` |
 
 ### Example: Popup calling Content Script
@@ -112,16 +114,19 @@ createChromeHandler({ router: appRouter });
 import { chromeLink } from '@cyia/chrome-trpc/client';
 import { createTRPCProxyClient } from '@trpc/client';
 import type { AppRouter } from './router';
-
+// when popup to Content Script
 const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-if (tab.id) {
-  const port = chrome.tabs.connect(tab.id);
-  const trpc = createTRPCProxyClient<AppRouter>({
-    links: [chromeLink({ port })],
-  });
-  const data = await trpc.getData.query();
-}
+const port = chrome.tabs.connect(tab.id);
+// when popup/Content Script to Background
+const port = chrome.runtime.connect();
+
+const trpc = createTRPCProxyClient<AppRouter>({
+  links: [chromeLink({ port })],
+});
+const data = await trpc.getData.query();
 ```
+
+
 
 ## 📦 Binary Compression
 
@@ -129,7 +134,7 @@ The adapter uses the [Snappy](https://github.com/zhipeng-jia/snappyjs) algorithm
 
 ### Response Compression (server configuration)
 
-In some scenarios you may want to explicitly specify which response paths should be compressed, or a procedure may return data that is not a plain `Uint8Array` but is still large.  
+In some scenarios you may want to explicitly specify which response paths should be compressed, or a procedure may return data that is not a plain `Uint8Array` but is still large.
 In such cases you can pass the `compressPathObj` option to `createChromeHandler`. The keys are the procedure route paths, and a value of `true` enables compression.
 
 For example, suppose you extended your router with a `res` sub-router and a `cmp` query:
@@ -145,7 +150,7 @@ export const appRouter = t.router({
     }),
   }),
 });
-```
+
 
 Server configuration compressing the path `'res.cmp'`:
 
