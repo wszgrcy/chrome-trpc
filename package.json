@@ -1,0 +1,35 @@
+{
+  "name": "cyia-template",
+  "version": "1.0.0",
+  "repository": {},
+  "scripts": {
+    "test": "pnpm --filter \"./packages/trpc\" test",
+    "build": "rimraf ./dist && tsx ./script/build.esbuild.ts && tsc -P ./tsconfig.type.json ",
+    "lint": "eslint --fix ./packages/**/*.ts && prettier ./packages/**/*.ts --write",
+    "publish-only": "tsx ./script/publish.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@eslint/js": "^9.37.0",
+    "@types/node": "^24.0.0",
+    "esbuild": "^0.28.1",
+    "esbuild-plugin-copy": "^2.1.1",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "fast-glob": "^3.3.3",
+    "globals": "^16.0.0",
+    "prettier": "^3.9.4",
+    "rimraf": "^6.1.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.46.0",
+    "execa": "9.6.1"
+  },
+  "dependencies": {
+    "@trpc/client": "^11.18.0",
+    "@trpc/server": "^11.18.0",
+    "chrome-types": "^0.1.432",
+    "playwright": "1.61.1",
+    "superjson": "^2.2.6"
+  }
+}

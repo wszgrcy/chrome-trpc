@@ -1,0 +1,19 @@
+{
+  "references": [
+    {
+      "path": "./tsconfig.dev.json"
+    },
+    {
+      "path": "./tsconfig.build.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./tsconfig.type.json"
+    }
+  ],
+  "include": [],
+  "files": [],
+  "extends": []
+}

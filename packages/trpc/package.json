@@ -1,0 +1,58 @@
+{
+  "name": "@cyia/chrome-trpc",
+  "version": "1.0.0",
+  "description": "tRPC Adapter for Chrome Extension",
+  "module": "esm",
+  "type": "module",
+  "scripts": {
+    "test:build": "rimraf -g ./test-dist && tsx ./script/test.esbuild.ts ",
+    "test": "rimraf -g ./test-dist && tsx ./script/test.esbuild.ts && playwright test"
+  },
+  "author": "wszgrcy",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wszgrcy/chrome-trpc",
+    "directory": "packages/trpc"
+  },
+  "homepage": "https://github.com/wszgrcy/chrome-trpc/tree/main/packages/trpc#readme",
+  "bugs": {
+    "url": "https://github.com/wszgrcy/chrome-trpc/issues"
+  },
+  "keywords": [
+    "chrome",
+    "trpc",
+    "popup",
+    "contentScript",
+    "contentScript",
+    "background",
+    "extension",
+    "type-safe"
+  ],
+  "exports": {
+    "./client": {
+      "types": "./client/index.d.ts",
+      "import": "./client/index.mjs"
+    },
+    "./server": {
+      "types": "./server/index.d.ts",
+      "import": "./server/index.mjs"
+    }
+  },
+  "dependencies": {
+    "snappyjs": "^0.7.0",
+    "bowser": "2.14.1"
+  },
+  "devDependencies": {
+    "@types/snappyjs": "^0.7.1",
+    "rxjs": "7.8.2",
+    "valibot": "1.4.2",
+    "playwright": "1.61.1",
+    "@types/node": "^24.0.0",
+    "@playwright/test": "1.61.1"
+  },
+  "peerDependencies": {
+    "@trpc/client": "^11.18.0",
+    "@trpc/server": "^11.18.0"
+  }
+}
