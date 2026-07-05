@@ -37,12 +37,12 @@ npm install @cyia/chrome-trpc @trpc/client @trpc/server
 
 ```typescript
 import { initTRPC } from '@trpc/server';
-import { z } from 'zod'; // 或其他验证库，如 valibot
+import * as v from 'valibot';
 
 const t = initTRPC.create();
 
 export const appRouter = t.router({
-  greet: t.procedure.input(z.string()).query(({ input }) => `Hello ${input}`),
+  greet: t.procedure.input(v.string()).query(({ input }) => `Hello ${input}`),
   getData: t.procedure.query(() => ({ payload: new Uint8Array([1, 2, 3]) })),
 });
 
@@ -137,7 +137,7 @@ if (tab.id) {
 ```typescript
 // router.ts 扩展
 export const appRouter = t.router({
-  greet: t.procedure.input(z.string()).query(({ input }) => `Hello ${input}`),
+  greet: t.procedure.input(v.string()).query(({ input }) => `Hello ${input}`),
   getData: t.procedure.query(() => ({ payload: new Uint8Array([1, 2, 3]) })),
   res: t.router({
     cmp: t.procedure.query(() => {

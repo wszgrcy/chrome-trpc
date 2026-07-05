@@ -37,12 +37,12 @@ Define your router in a shared `router.ts` file using `@trpc/server` so that bot
 
 ```typescript
 import { initTRPC } from '@trpc/server';
-import { z } from 'zod'; // or another validation library like valibot
+import * as v from 'valibot';
 
 const t = initTRPC.create();
 
 export const appRouter = t.router({
-  greet: t.procedure.input(z.string()).query(({ input }) => `Hello ${input}`),
+  greet: t.procedure.input(v.string()).query(({ input }) => `Hello ${input}`),
   getData: t.procedure.query(() => ({ payload: new Uint8Array([1, 2, 3]) })),
 });
 
@@ -137,7 +137,7 @@ For example, suppose you extended your router with a `res` sub-router and a `cmp
 ```typescript
 // router.ts extended
 export const appRouter = t.router({
-  greet: t.procedure.input(z.string()).query(({ input }) => `Hello ${input}`),
+  greet: t.procedure.input(v.string()).query(({ input }) => `Hello ${input}`),
   getData: t.procedure.query(() => ({ payload: new Uint8Array([1, 2, 3]) })),
   res: t.router({
     cmp: t.procedure.query(() => {
