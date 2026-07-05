@@ -2,13 +2,13 @@ name: publish
 on:
   push:
     branches:
-      - 'main'
+      - 'master'
       - 'alpha'
 permissions:
   id-token: write
   contents: write
 env:
-  PUBLISH_TAG: ${{ github.ref_name == 'main' && 'latest' || 'alpha' }}
+  PUBLISH_TAG: ${{ github.ref_name == 'master' && 'latest' || 'alpha' }}
 jobs:
   publish:
     runs-on: ubuntu-latest
