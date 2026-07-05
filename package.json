@@ -8,6 +8,7 @@
     "lint": "eslint --fix ./packages/**/*.ts && prettier ./packages/**/*.ts --write",
     "publish-only": "tsx ./script/publish.ts"
   },
+  "packageManager": "pnpm@11.4.0",
   "author": "",
   "license": "ISC",
   "description": "",
