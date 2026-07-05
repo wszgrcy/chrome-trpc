@@ -1,6 +1,6 @@
 {
   "name": "cyia-template",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "repository": {},
   "scripts": {
     "test": "pnpm --filter \"./packages/trpc\" test",

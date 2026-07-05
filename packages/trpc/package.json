@@ -1,6 +1,6 @@
 {
   "name": "@cyia/chrome-trpc",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "tRPC Adapter for Chrome Extension",
   "module": "esm",
   "type": "module",
