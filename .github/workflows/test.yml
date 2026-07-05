@@ -16,5 +16,6 @@ jobs:
         uses: pnpm/action-setup@v4
 
       - run: pnpm i
+      - run: npx playwright install
       - name: test
         run: npm run test
